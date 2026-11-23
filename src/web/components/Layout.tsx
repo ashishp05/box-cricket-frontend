@@ -40,29 +40,29 @@ export const SiteHeader = () => {
     <header className="site-header">
       <div className="container">
         <Link to="/" aria-label="The Riverside Cricket Box, home">
-          <Logo />
+          <Logo inverse />
         </Link>
         <nav className="site-nav" aria-label="Main">
           <NavLink to="/" end>
             Home
           </NavLink>
           <NavLink to="/arena">Arena</NavLink>
-          <NavLink to="/bookings">My bookings</NavLink>
+          <NavLink to="/bookings">My Bookings</NavLink>
         </nav>
         <div className="header-actions">
-          <Link to="/book" className="btn primary">
-            <MdSportsCricket aria-hidden /> Book a slot
-          </Link>
           {customer ? (
             <Link to="/profile" className="account-chip">
               <span className="avatar">{(customer.visitor.name || '?').slice(0, 1).toUpperCase()}</span>
               {customer.visitor.name.split(' ')[0] || 'Profile'}
             </Link>
           ) : (
-            <Link to="/auth" className="btn primary">
+            <Link to="/auth" className="account-chip">
               <MdPersonOutline aria-hidden /> Log in
             </Link>
           )}
+          <Link to="/book" className="header-book">
+            Book a Slot
+          </Link>
         </div>
         <Link to="/profile" className="mobile-account" aria-label="Profile">
           <MdPersonOutline aria-hidden />

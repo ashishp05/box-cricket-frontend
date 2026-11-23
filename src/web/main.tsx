@@ -1,6 +1,10 @@
-import '@fontsource-variable/roboto';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/space-grotesk';
 import '@shared/styles/base.css';
 import './web.css';
+import './home.css';
+import './arena.css';
+import './booking.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';

@@ -2,7 +2,7 @@ import { useQueries, useQuery } from '@tanstack/react-query';
 
 import type { SlotGrid } from '@shared/api/types';
 import { addDays, todayIST } from '@shared/lib/time';
-import type { DayMark } from '@shared/ui/SlotPicker';
+import type { DayMark } from './components/SlotPickers';
 
 import { api, queryKeys } from './api';
 

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useRef, useState } from 'react';
-import { MdCreditCard, MdLock, MdQrCode2 } from 'react-icons/md';
+import { LuCircleX, LuClock, LuCreditCard, LuLock, LuQrCode, LuRefreshCw, LuShieldCheck, LuSmartphone, LuWallet } from 'react-icons/lu';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { ApiError, errorMessage } from '@shared/api/client';
@@ -9,20 +9,19 @@ import type { Booking, OnlinePaymentKind, PaymentOrder } from '@shared/api/types
 import { rupees } from '@shared/lib/format';
 import { openCheckout } from '@shared/lib/razorpay';
 import { useSecondsLeft } from '@shared/lib/time';
-import { Banner, Button, EmptyState, ErrorState, Loading } from '@shared/ui/core';
-import { PriceBreakdown } from '@shared/ui/PriceBreakdown';
+import { Button, ErrorState, Skeleton, cx } from '@shared/ui/core';
 
 import { api, queryKeys } from '../api';
 import { BallMark } from '../components/art';
+import { ArenaHeader, HoldTimer, PriceLines, SlotFacts } from '../components/booking';
 import { CheckoutLayout } from '../components/CheckoutLayout';
 import { useLoginRedirect } from '../components/RequireLogin';
 import { useCustomer } from '../session';
-import { BookingSummaryCard, HoldBanner } from './Checkout';
 
-const methods: { id: OnlinePaymentKind; label: string; icon: typeof MdQrCode2 }[] = [
-  { id: 'upi_qr', label: 'UPI QR', icon: MdQrCode2 },
-  { id: 'credit_card', label: 'Credit card', icon: MdCreditCard },
-  { id: 'debit_card', label: 'Debit card', icon: MdCreditCard },
+const methods: { id: OnlinePaymentKind; label: string; sub: string; icon: typeof LuQrCode }[] = [
+  { id: 'upi_qr', label: 'UPI', sub: 'GPay, PhonePe, Paytm, BHIM or any UPI app', icon: LuSmartphone },
+  { id: 'credit_card', label: 'Credit card', sub: 'Visa, Mastercard, RuPay, Amex', icon: LuCreditCard },
+  { id: 'debit_card', label: 'Debit card', sub: 'All major Indian bank cards', icon: LuWallet },
 ];
 
 const PENDING_SECONDS = 15 * 60;
@@ -102,113 +101,196 @@ const PayInner = ({ id }: { id: string }) => {
       return;
     }
     if (order.method === 'upi_qr' && order.qrString) {
-      // Paid by scanning: check whether the payment has reached us.
       const latest = await booking.refetch();
       if (latest.data?.status !== 'upcoming') setFailure('We have not received the payment yet. Finish it in your UPI app - this page updates by itself.');
       return;
     }
     try {
       const { result, error } = await openCheckout(order, {
-        name: booking.data?.customerName ?? '',
+        name: b.customerName,
         phone: customer?.visitor.phone ?? '',
         email: customer?.visitor.email,
         description: `${b.slotLabel}, ${b.date} - ${b.id}`,
       });
       if (result) await verify(result);
-      else if (error) setFailure(`${error} You can try again.`);
+      else setFailure(error ? `${error}` : 'Payment was cancelled before it finished. No money has been deducted.');
     } catch (error) {
       setFailure(errorMessage(error));
     }
   };
 
-  if (booking.isLoading) return <Loading label="Loading your booking…" />;
-  if (booking.isError) return <ErrorState error={booking.error} title="We could not find this booking" onRetry={() => booking.refetch()} />;
+  const retry = (m?: OnlinePaymentKind) => {
+    setFailure(undefined);
+    if (m && m !== method) {
+      setMethod(m);
+      return;
+    }
+    orderFor.current = method;
+    setOrder(null);
+    createOrder.mutate(method);
+  };
+
+  if (booking.isLoading) {
+    return (
+      <div className="bk-layout" aria-label="Loading payment">
+        <div className="bk-main-col">
+          <Skeleton height={40} width={260} />
+          <Skeleton height={84} />
+          <Skeleton height={84} />
+          <Skeleton height={84} />
+        </div>
+        <aside className="bk-aside">
+          <Skeleton height={360} />
+        </aside>
+      </div>
+    );
+  }
+  if (booking.isError) {
+    return (
+      <div className="bk-card bk-state">
+        <ErrorState error={booking.error} title="We could not find this booking" onRetry={() => booking.refetch()} />
+      </div>
+    );
+  }
   const b = booking.data!;
-  if (b.status !== 'pending') return <Navigate to={b.status === 'upcoming' ? `/booking/${b.id}/confirmed` : `/bookings/${b.id}`} replace />;
+  if (b.status !== 'pending') return <Navigate to={b.status === 'upcoming' ? `/booking/${b.id}/confirmed` : '/bookings'} replace />;
 
   if (secondsLeft === 0) {
     return (
-      <EmptyState title="Payment time is up" action={<Link to="/book" className="btn primary lg">Book again</Link>}>
-        Unpaid bookings are released after 15 minutes, so these slots may now be free for others. No money has been deducted.
-      </EmptyState>
+      <div className="bk-card bk-state bk-fail">
+        <span className="bk-state-icon amber">
+          <LuClock aria-hidden />
+        </span>
+        <h2>Payment time is up</h2>
+        <p>Unpaid bookings are released after 15 minutes, so these slots may now be free for others. No money has been deducted.</p>
+        <div className="bk-state-actions">
+          <Link to={`/book?date=${b.date}&step=time`} className="btn primary lg">
+            Book again
+          </Link>
+          <Link to="/bookings" className="btn outline lg">
+            My bookings
+          </Link>
+        </div>
+      </div>
     );
   }
 
   const qrValue = order?.qrString ?? (order?.mock ? `upi://pay?pn=The%20Riverside%20Cricket%20Box&am=${b.price.total}&tn=${b.id}` : null);
+  const otherMethod = methods.find((m) => m.id !== method)!;
 
   return (
-    <div className="two-col">
-      <div>
-        <h1 className="page-title">Payment</h1>
-        {secondsLeft !== null && <HoldBanner secondsLeft={secondsLeft} total={PENDING_SECONDS} />}
-        {failure && (
-          <div style={{ marginTop: 14 }}>
-            <Banner tone="danger">{failure}</Banner>
+    <>
+      <div className="bk-layout">
+        <div className="bk-main-col">
+          <div className="bk-head">
+            <h1>Payment</h1>
+            <p>Choose how you'd like to pay. Your slot is confirmed the moment payment succeeds.</p>
           </div>
-        )}
-        <h2 className="step-heading" style={{ marginBottom: 0 }}>
-          Choose payment method
-        </h2>
-        <div className="pay-methods" role="radiogroup" aria-label="Payment method">
-          {methods.map(({ id: m, label, icon: Icon }) => (
-            <button key={m} type="button" role="radio" aria-checked={method === m} className="chip" aria-pressed={method === m} onClick={() => setMethod(m)}>
-              <Icon aria-hidden /> {label}
-            </button>
-          ))}
+          {secondsLeft !== null && <HoldTimer secondsLeft={secondsLeft} total={PENDING_SECONDS} label="Complete payment to confirm your slot" />}
+
+          {failure && (
+            <div className="bk-card bk-payfail" role="alert">
+              <span className="bk-state-icon red">
+                <LuCircleX aria-hidden />
+              </span>
+              <div className="grow">
+                <h2>Payment failed</h2>
+                <p>{failure}</p>
+                <p className="bk-fine">If money was debited, it is refunded to your account automatically within 5–7 working days.</p>
+                <div className="bk-state-actions">
+                  <Button variant="primary" onClick={() => retry()}>
+                    <LuRefreshCw aria-hidden /> Try again
+                  </Button>
+                  <Button variant="outline" onClick={() => retry(otherMethod.id)}>
+                    Pay with {otherMethod.label}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="bk-card">
+            <h2 className="bk-card-title">
+              <LuWallet aria-hidden /> Payment method
+            </h2>
+            <div className="bk-methods" role="radiogroup" aria-label="Payment method">
+              {methods.map(({ id: m, label, sub, icon: Icon }) => (
+                <button key={m} type="button" role="radio" aria-checked={method === m} className={cx('bk-method', method === m && 'on')} onClick={() => setMethod(m)}>
+                  <span className="bk-method-icon">
+                    <Icon aria-hidden />
+                  </span>
+                  <span className="grow">
+                    <strong>{label}</strong>
+                    <small>{sub}</small>
+                  </span>
+                  <span className="bk-radio" aria-hidden />
+                </button>
+              ))}
+            </div>
+
+            <div className="bk-paypanel">
+              {!order ? (
+                <div className="bk-preparing">
+                  <span className="spinner" aria-hidden /> Preparing secure payment…
+                </div>
+              ) : method === 'upi_qr' && qrValue ? (
+                <div className="bk-qr">
+                  <div className="bk-qr-code">
+                    <QRCodeSVG value={qrValue} size={168} fgColor="#062019" />
+                  </div>
+                  <div>
+                    <strong>
+                      <LuQrCode aria-hidden /> Scan to pay {rupees(b.price.total)}
+                    </strong>
+                    <p>Open any UPI app and scan this code{order.mock ? '' : ', or tap Pay Now to choose your UPI app'}.</p>
+                    <p className="bk-fine">{order.mock ? 'Test mode: tap Pay Now to complete a test payment.' : 'This page updates by itself once you pay.'}</p>
+                  </div>
+                </div>
+              ) : (
+                <p className="bk-paynote">
+                  {order.mock
+                    ? 'Test mode: Razorpay keys are not set on the server, so Pay Now completes a test payment.'
+                    : method === 'upi_qr'
+                      ? 'Tap Pay Now to open secure checkout and pick your UPI app.'
+                      : "Tap Pay Now to enter your card in Razorpay's secure checkout. We never see or store your card number."}
+                </p>
+              )}
+            </div>
+            {order?.mock && (
+              <button type="button" className="bk-link small" onClick={() => setFailure('Your bank declined the payment (test). No money has been deducted.')}>
+                Test mode: simulate a failed payment
+              </button>
+            )}
+          </div>
+
+          <p className="bk-trust">
+            <LuShieldCheck aria-hidden /> 256-bit encrypted · Payments processed by Razorpay · PCI DSS compliant
+          </p>
         </div>
 
-        <div className="card pay-panel">
-          {!order ? (
-            <Loading label="Preparing secure payment…" />
-          ) : method === 'upi_qr' && qrValue ? (
-            <>
-              <h4>Scan to pay {rupees(b.price.total)}</h4>
-              <p className="tiny muted" style={{ marginTop: 6 }}>
-                Open any UPI app and scan this QR code.{order.mock ? ' Test mode - no real payment.' : ''}
-              </p>
-              <div className="qr-box" style={{ margin: '14px auto 6px' }}>
-                <QRCodeSVG value={qrValue} size={186} />
-              </div>
-              <p className="tiny muted">{order.mock ? 'Tap Pay below to complete the test payment.' : 'After paying in your app, this page updates by itself.'}</p>
-            </>
-          ) : (
-            <>
-              <h4>Pay {rupees(b.price.total)} by {method === 'upi_qr' ? 'UPI' : method === 'credit_card' ? 'credit card' : 'debit card'}</h4>
-              <p className="small muted" style={{ marginTop: 8 }}>
-                {order.mock
-                  ? 'Test mode: Razorpay keys are not set on the server, so tapping Pay completes a test payment.'
-                  : method === 'upi_qr'
-                    ? 'Tap Pay to open Razorpay secure checkout. Scan the UPI QR with any UPI app (GPay, PhonePe, Paytm), or pick your UPI app on mobile.'
-                    : "Tap Pay to open Razorpay's secure checkout. We never see or store your card number."}
-              </p>
-              <p className="tiny muted" style={{ marginTop: 10 }}>
-                Secured by Razorpay
-              </p>
-            </>
-          )}
-        </div>
-        <p className="row small muted" style={{ marginTop: 16, '--gap': '8px' } as React.CSSProperties}>
-          <MdLock color="#138a57" aria-hidden /> Payments are encrypted and secure.
-        </p>
+        <aside className="bk-aside">
+          <div className="bk-card bk-sum">
+            <h3>Payment summary</h3>
+            <ArenaHeader name={b.venueName} sub={`${b.pitchName} · Booking ${b.id}`} />
+            <SlotFacts slot={b} compact />
+            <PriceLines price={b.price} />
+            <Button variant="primary" size="lg" block disabled={!order || processing} loading={createOrder.isPending} onClick={() => void pay()}>
+              <LuLock aria-hidden /> Pay Now · {rupees(b.price.total)}
+            </Button>
+            <p className="bk-note">
+              Booked by {b.customerName} · {b.players ?? '—'} players
+            </p>
+          </div>
+        </aside>
       </div>
 
-      <aside className="sticky-side stack" style={{ '--gap': '16px' } as React.CSSProperties}>
-        <BookingSummaryCard date={b.date} startHour={b.startHour} hours={b.hours} pitchName={b.pitchName} />
-        <div className="card summary-card">
-          <PriceBreakdown price={b.price} lines={false} />
-        </div>
-        <Button variant="primary" size="lg" block disabled={!order || processing} loading={createOrder.isPending} onClick={() => void pay()}>
-          <MdLock aria-hidden /> Pay {rupees(b.price.total)}
-        </Button>
-      </aside>
-
-      <div className="mobile-bar">
+      <div className="bk-bar">
         <span className="grow">
-          <strong className="block">{rupees(b.price.total)}</strong>
-          <span style={{ color: '#c8f23a', fontSize: 13 }}>Total payable</span>
+          <strong>{rupees(b.price.total)}</strong>
+          <small>Total payable</small>
         </span>
         <Button variant="primary" size="lg" disabled={!order || processing} onClick={() => void pay()}>
-          <MdLock aria-hidden /> Pay
+          <LuLock aria-hidden /> Pay Now
         </Button>
       </div>
 
@@ -224,7 +306,7 @@ const PayInner = ({ id }: { id: string }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
@@ -238,8 +320,8 @@ export const Pay = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customer]);
   return (
-    <CheckoutLayout step={3} title="Payment" onBack={() => navigate(`/bookings/${id}`)}>
-      {customer ? <PayInner id={id} /> : <Loading />}
+    <CheckoutLayout step={5} title="Payment" onBack={() => navigate('/bookings')}>
+      {customer ? <PayInner id={id} /> : null}
     </CheckoutLayout>
   );
 };

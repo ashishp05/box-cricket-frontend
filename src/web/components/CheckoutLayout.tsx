@@ -1,70 +1,55 @@
 import type { ReactNode } from 'react';
-import { MdArrowBack, MdCheck, MdLockOutline } from 'react-icons/md';
+import { LuArrowLeft, LuCheck, LuLock } from 'react-icons/lu';
 import { Link } from 'react-router-dom';
 
 import { Logo } from './art';
-import { TabBar } from './Layout';
 
-const stages = ['Slots', 'Review', 'Pay'];
+export const bookingSteps = ['Date', 'Time', 'Summary', 'Details', 'Payment', 'Confirmed'] as const;
+export type BookingStep = 1 | 2 | 3 | 4 | 5 | 6;
 
-// Checkout shell: back arrow, logo, Slots / Review / Pay stepper and "Secure checkout".
-export const CheckoutLayout = ({
-  step,
-  title,
-  onBack,
-  children,
-}: {
-  step: 1 | 2 | 3;
-  title: string;
-  onBack: () => void;
-  children: ReactNode;
-}) => (
-  <div className="site">
-    <header className="checkout-header">
-      <div className="container">
-        <button type="button" className="back-btn" onClick={onBack} aria-label="Back">
-          <MdArrowBack />
-        </button>
-        <Link to="/" aria-label="Home">
-          <Logo />
+// One shell for every booking screen: back arrow, logo, the six-step progress and "Secure checkout".
+export const CheckoutLayout = ({ step, title, onBack, children }: { step: BookingStep; title: string; onBack?: () => void; children: ReactNode }) => (
+  <div className="site bk-site">
+    <header className="bk-header">
+      <div className="container bk-header-row">
+        {onBack ? (
+          <button type="button" className="bk-back" onClick={onBack} aria-label="Back">
+            <LuArrowLeft />
+          </button>
+        ) : (
+          <span className="bk-back-spacer" />
+        )}
+        <Link to="/" aria-label="The Riverside Cricket Box, home" className="bk-logo">
+          <Logo inverse />
         </Link>
-        <span className="mobile-title">{title}</span>
-        <ol className="stepper" aria-label="Checkout progress">
-          {stages.map((label, i) => {
+        <span className="bk-mobile-title">{title}</span>
+        <span className="bk-secure">
+          <LuLock aria-hidden /> Secure checkout
+        </span>
+      </div>
+      <div className="container">
+        <ol className="bk-steps" aria-label="Booking progress">
+          {bookingSteps.map((label, i) => {
             const n = i + 1;
-            const done = n < step;
-            const on = n <= step;
+            const state = n < step || step === 6 ? 'done' : n === step ? 'current' : 'todo';
             return (
-              <li key={label} className="row" style={{ listStyle: 'none', '--gap': '10px' } as React.CSSProperties}>
-                {i > 0 && <span className={`line${on ? ' on' : ''}`} />}
-                <span className={`stage${on ? ' on' : ''}`} aria-current={n === step ? 'step' : undefined}>
-                  <span className="step-dot">{done ? <MdCheck /> : n}</span>
-                  {label}
-                </span>
+              <li key={label} className={state} aria-current={state === 'current' ? 'step' : undefined}>
+                <span className="bk-dot">{state === 'done' ? <LuCheck aria-hidden /> : n}</span>
+                <span className="bk-step-label">{label}</span>
               </li>
             );
           })}
         </ol>
-        <span className="secure">
-          <MdLockOutline aria-hidden /> Secure checkout
-        </span>
+        <div className="bk-progress" aria-hidden>
+          <i style={{ width: `${(step / bookingSteps.length) * 100}%` }} />
+        </div>
+        <p className="bk-progress-text">
+          Step {step} of {bookingSteps.length} · <b>{bookingSteps[step - 1]}</b>
+        </p>
       </div>
     </header>
-    <main className="site-main">
-      <div className="container">
-        <div className="mobile-progress">
-          <div className="bars">
-            {stages.map((s, i) => (
-              <i key={s} className={i < step ? 'on' : ''} />
-            ))}
-          </div>
-          <p>
-            Step {step} of 3 <b>{stages[step - 1]}</b>
-          </p>
-        </div>
-        {children}
-      </div>
+    <main className="bk-main">
+      <div className="container">{children}</div>
     </main>
-    <TabBar />
   </div>
 );

@@ -1,32 +1,19 @@
 // Static venue content, copied from the original Flutter site so the two read the same.
 // Edit here to change marketing copy. Prices, slots, offers and bookings always come from the API.
 import type { IconType } from 'react-icons';
-import {
-  MdCheckroom,
-  MdLocalParking,
-  MdMedicalServices,
-  MdOutlineChair,
-  MdOutlineCoffee,
-  MdOutlineVideocam,
-  MdOutlineWaterDrop,
-  MdSportsCricket,
-  MdWc,
-  MdWbTwilight,
-} from 'react-icons/md';
+import { LuBath, LuCar, LuCctv, LuCoffee, LuDroplets, LuHeartPulse, LuLampCeiling, LuPackage, LuShirt, LuUsers } from 'react-icons/lu';
 
-import type { GalleryVariant } from './components/art';
-
-export const facilities: { name: string; icon: IconType }[] = [
-  { name: 'Floodlights', icon: MdWbTwilight },
-  { name: 'Parking', icon: MdLocalParking },
-  { name: 'Washrooms', icon: MdWc },
-  { name: 'Drinking water', icon: MdOutlineWaterDrop },
-  { name: 'Changing room', icon: MdCheckroom },
-  { name: 'Cafe & snacks', icon: MdOutlineCoffee },
-  { name: 'Spectator seating', icon: MdOutlineChair },
-  { name: 'Equipment rental', icon: MdSportsCricket },
-  { name: 'First aid', icon: MdMedicalServices },
-  { name: 'CCTV', icon: MdOutlineVideocam },
+export const facilities: { name: string; icon: IconType; desc: string }[] = [
+  { name: 'Floodlights', icon: LuLampCeiling, desc: 'Bright LED lights for night games' },
+  { name: 'Parking', icon: LuCar, desc: 'Free parking on site' },
+  { name: 'Washrooms', icon: LuBath, desc: 'Clean washrooms at the venue' },
+  { name: 'Drinking Water', icon: LuDroplets, desc: 'Water available for players' },
+  { name: 'Changing Room', icon: LuShirt, desc: 'Change before and after play' },
+  { name: 'Cafe & Snacks', icon: LuCoffee, desc: 'Drinks and snacks between overs' },
+  { name: 'Spectator Seating', icon: LuUsers, desc: 'Seats for friends and family' },
+  { name: 'Equipment Rental', icon: LuPackage, desc: 'Rent a bat at the arena' },
+  { name: 'First Aid', icon: LuHeartPulse, desc: 'First aid kit kept on site' },
+  { name: 'CCTV', icon: LuCctv, desc: 'Venue covered by cameras' },
 ];
 
 export const groundRules = [
@@ -74,12 +61,42 @@ export const arenaReviews = [
   { name: 'Dev V.', when: '1 week ago', stars: 5, tag: 'Played 3 times', text: 'Smooth check-in, on-time start and clean turf. Slot timings are respected, which matters a lot.' },
 ];
 
-export const gallery = (venueName: string): { variant: GalleryVariant; caption: string }[] => [
-  { variant: 'lights', caption: `${venueName} under lights` },
-  { variant: 'aerial', caption: 'Aerial view of the box' },
-  { variant: 'nets', caption: 'Netting and boundary' },
-  { variant: 'pavilion', caption: 'Seating and pavilion' },
-  { variant: 'cafe', caption: 'Cafe and lounge' },
+export type PhotoCategory = 'Ground' | 'Pitch' | 'Floodlights' | 'Seating' | 'Facilities';
+export const photoCategories: PhotoCategory[] = ['Ground', 'Pitch', 'Floodlights', 'Seating', 'Facilities'];
+
+export interface Photo {
+  src: string;
+  thumb: string;
+  alt: string;
+  caption: string;
+  categories: PhotoCategory[];
+}
+
+const photo = (name: string, caption: string, alt: string, categories: PhotoCategory[]): Photo => ({
+  src: `/images/${name}.webp`,
+  thumb: `/images/${name}-sm.webp`,
+  caption,
+  alt,
+  categories,
+});
+
+// arena-night is the real venue. The others are mood shots: replace them with venue photos when available.
+export const photos = (venueName: string): Photo[] => [
+  photo('arena-night', `${venueName} under lights`, 'Aerial view of the netted, floodlit turf box at night with players on the field', ['Ground', 'Pitch', 'Floodlights']),
+  photo('golden-hour', 'Golden-hour warm-up', 'Players stretching on the outfield at sunset', ['Ground']),
+  photo('bat-and-ball', 'Bats available on rent', 'A cricket bat and a red ball on a dark surface', ['Facilities']),
+  photo('floodlit-stadium', 'Big-match floodlights', 'Aerial view of a floodlit cricket stadium at night', ['Floodlights']),
+  photo('batting-under-lights', 'Batting under the lights', 'A batter playing a shot at night with the wicketkeeper behind the stumps', ['Pitch', 'Floodlights']),
+];
+
+export const arenaFaqs: [string, string][] = [
+  ['What surface is the box?', 'A netted box with premium turf and a marked centre pitch. Wear non-marking sports shoes; spikes are not allowed.'],
+  ['Which balls can we use?', 'Tennis and rubber balls only. Leather balls are not allowed in the box.'],
+  ['How many players can play?', 'The box is set up for 6-a-side. Extra players may be charged at the venue.'],
+  ['Can we play at night?', 'Yes. The arena is open 24 hours and fully floodlit, at the same flat rate any hour.'],
+  ['Do you provide equipment?', 'You can rent a bat at the arena, or bring your own kit.'],
+  ['When should we arrive?', 'Please arrive 10 minutes early. Your slot ends on time so the next team can start.'],
+  ['Can I cancel or reschedule?', 'Yes, from My Bookings. Full refund 24+ hours before your slot, 50% from 6 to 24 hours, no refund under 6 hours.'],
 ];
 
 export const CONTACT_EMAIL = 'book@theriverside.example';
