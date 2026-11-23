@@ -24,6 +24,9 @@ const { request } = client;
 
 export const api = {
   // Login (OTP)
+  // Name + mobile login without an SMS code (server CUSTOMER_LOGIN_MODE=simple).
+  simpleLogin: (name: string, phone: string) =>
+    request<VisitorSession>('/visitors/login', { method: 'POST', body: { name, phone }, token: null }),
   sendOtp: (phone: string) => request<OtpSent>('/visitors/otp/send', { method: 'POST', body: { phone }, token: null }),
   verifyOtp: (phone: string, code: string, name?: string) =>
     request<VisitorSession>('/visitors/otp/verify', { method: 'POST', body: { phone, code, ...(name && { name }) }, token: null }),

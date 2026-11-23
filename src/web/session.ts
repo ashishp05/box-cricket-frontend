@@ -6,6 +6,9 @@ export interface CustomerSession {
   visitor: Visitor;
 }
 
+// How customers log in. Must match the backend's CUSTOMER_LOGIN_MODE.
+export const LOGIN_WITH_OTP = import.meta.env.VITE_CUSTOMER_LOGIN_MODE === 'otp';
+
 export const customerSession = createSessionStore<CustomerSession>('rcb.customer.session');
 export const useCustomer = () => customerSession.use();
 

@@ -148,7 +148,7 @@ export const Details = () => {
                 <input value={phoneText(customer.visitor.phone)} readOnly aria-readonly />
                 <LuLock className="end" aria-hidden />
               </span>
-              <span className="field-hint">Verified at login. Booking SMS and your ticket go to this number.</span>
+              <span className="field-hint">Your login number. Booking SMS and your ticket go to this number.</span>
             </label>
 
             <label className={cx('bk-field', shownErrors.email && 'invalid')}>

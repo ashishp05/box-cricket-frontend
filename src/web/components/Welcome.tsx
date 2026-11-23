@@ -2,27 +2,40 @@ import { type FormEvent, type ReactNode, useState } from 'react';
 
 import { nameError, phoneError, sanitizeName, sanitizePhone } from '@shared/lib/validation';
 
+import { api } from '../api';
+import { customerSession, LOGIN_WITH_OTP, loadGuest, saveGuest, useCustomer } from '../session';
 import { Logo } from './art';
-import { loadGuest, saveGuest, useCustomer } from '../session';
 
-// First-visit welcome screen (name + mobile), as on the original site. The details stay on this
-// device and pre-fill login and checkout; logging in with an OTP is still required to book.
+// First-visit welcome screen (name + mobile). With simple login this also signs the customer in;
+// with OTP login the details only pre-fill login and checkout.
 export const WelcomeGate = ({ children }: { children: ReactNode }) => {
   const customer = useCustomer();
   const [guest, setGuest] = useState(loadGuest);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [busy, setBusy] = useState(false);
 
   if (guest || customer) return <>{children}</>;
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const p = phone;
     const next = { name: nameError(name), phone: phoneError(p) };
     setErrors(next);
     if (next.name || next.phone) return;
     const value = { name: name.trim(), phone: p };
+    if (!LOGIN_WITH_OTP) {
+      setBusy(true);
+      try {
+        const session = await api.simpleLogin(value.name, value.phone);
+        customerSession.set({ token: session.token, visitor: session.visitor });
+      } catch {
+        // Server unreachable: let them browse; booking asks them to log in again.
+      } finally {
+        setBusy(false);
+      }
+    }
     saveGuest(value);
     setGuest(value);
   };
@@ -51,10 +64,14 @@ export const WelcomeGate = ({ children }: { children: ReactNode }) => {
             </span>
             {errors.phone && <span className="field-error">{errors.phone}</span>}
           </label>
-          <button type="submit" className="btn primary lg block">
-            Continue
+          <button type="submit" className="btn primary lg block" disabled={busy} aria-busy={busy || undefined}>
+            {busy && <span className="spinner sm" aria-hidden />} Continue
           </button>
-          <p className="tiny muted center">We use these to fill in your booking faster. You confirm your number with a one-time code when you book.</p>
+          <p className="tiny muted center">
+            {LOGIN_WITH_OTP
+              ? 'We use these to fill in your booking faster. You confirm your number with a one-time code when you book.'
+              : 'Your bookings and tickets are linked to this mobile number.'}
+          </p>
         </div>
       </form>
     </main>

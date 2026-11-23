@@ -12,7 +12,7 @@ import { useToast } from '@shared/ui/Toast';
 
 import { api } from '../api';
 import { BallMark } from '../components/art';
-import { customerSession, loadGuest, useCustomer } from '../session';
+import { customerSession, LOGIN_WITH_OTP, loadGuest, useCustomer } from '../session';
 
 type Step = 'phone' | 'code' | 'name';
 
@@ -38,6 +38,7 @@ export const Auth = () => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const [finishing, setFinishing] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
   useEffect(() => {
     if (step !== 'code') return undefined;
@@ -121,6 +122,27 @@ export const Auth = () => {
 
   const resendIn = Math.max(0, Math.ceil((resendAt - now) / 1000));
 
+  // Simple login: name + mobile, no SMS code.
+  const simpleLogin = async (event: FormEvent) => {
+    event.preventDefault();
+    const found = { name: nameError(name), phone: phoneError(phone) };
+    setErrors(found);
+    if (found.name || found.phone) return;
+    setBusy(true);
+    setError(undefined);
+    setFinishing(true);
+    try {
+      const session = await api.simpleLogin(name.trim(), phone);
+      customerSession.set({ token: session.token, visitor: session.visitor });
+      done();
+    } catch (err) {
+      setFinishing(false);
+      setError(errorMessage(err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="container auth-grid">
       <div className="auth-promo">
@@ -140,12 +162,60 @@ export const Auth = () => {
       </div>
 
       <div className="card auth-card">
-        <h1>{step === 'name' ? 'One last thing' : 'Login or sign up'}</h1>
+        <h1>{step === 'name' ? 'One last thing' : LOGIN_WITH_OTP ? 'Login or sign up' : 'Your Details'}</h1>
         <p className="muted" style={{ marginTop: 4 }}>
-          {step === 'name' ? 'What name should we put on your bookings?' : 'Takes 20 seconds. No password needed.'}
+          {step === 'name' ? 'What name should we put on your bookings?' : LOGIN_WITH_OTP ? 'Takes 20 seconds. No password needed.' : 'Enter your name and mobile number to book and manage your games.'}
         </p>
 
-        {step === 'phone' && (
+        {!LOGIN_WITH_OTP && (
+          <form className="stack" style={{ '--gap': '16px', marginTop: 22 } as React.CSSProperties} onSubmit={simpleLogin} noValidate>
+            <label className="field">
+              <span className="field-label">Full name</span>
+              <input
+                className="input"
+                autoComplete="name"
+                placeholder="Your name"
+                value={name}
+                maxLength={80}
+                onChange={(e) => {
+                  setName(sanitizeName(e.target.value));
+                  setErrors((x) => ({ ...x, name: undefined }));
+                }}
+                aria-invalid={!!errors.name}
+                autoFocus
+              />
+              {errors.name && <span className="field-error">{errors.name}</span>}
+            </label>
+            <label className="field">
+              <span className="field-label">Mobile number</span>
+              <span className="input-group">
+                <span className="prefix">+91</span>
+                <input
+                  className="input"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  placeholder="10-digit number"
+                  value={phone}
+                  maxLength={10}
+                  onChange={(e) => {
+                    setPhone(sanitizePhone(e.target.value));
+                    setErrors((x) => ({ ...x, phone: undefined }));
+                  }}
+                  aria-invalid={!!errors.phone}
+                />
+              </span>
+              {errors.phone && <span className="field-error">{errors.phone}</span>}
+            </label>
+            {error && <Banner tone="danger">{error}</Banner>}
+            <Button type="submit" variant="primary" size="lg" block loading={busy}>
+              Continue
+            </Button>
+            <p className="tiny muted">By continuing you agree to our Terms of Use and Privacy Policy.</p>
+          </form>
+        )}
+
+        {LOGIN_WITH_OTP && step === 'phone' && (
           <form className="stack" style={{ '--gap': '16px', marginTop: 22 } as React.CSSProperties} onSubmit={sendCode} noValidate>
             <label className="field">
               <span className="field-label">Mobile number</span>
