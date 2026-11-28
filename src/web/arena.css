@@ -4,16 +4,14 @@
   padding-bottom: 0;
 }
 .arena-page .stars {
-  color: var(--lime);
+  color: #fff;
 }
 .a-eyebrow {
   display: block;
   margin-bottom: 10px;
   color: var(--primary);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 13px;
 }
 
 /* Extra button variants */
@@ -51,12 +49,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
-  animation: a-zoom 14s ease-out both;
-}
-@keyframes a-zoom {
-  from {
-    transform: scale(1.08);
-  }
 }
 .a-hero-shade {
   position: absolute;
@@ -92,30 +84,28 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  height: 28px;
   padding: 0 12px;
   border-radius: 999px;
-  color: var(--night);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  background: rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  height: 32px;
 }
 .a-open i {
-  width: 6px;
-  height: 6px;
   border-radius: 50%;
-  background: currentColor;
-  animation: h-pulse 1.8s ease-in-out infinite;
+  background: #4cc38a;
+  width: 8px;
+  height: 8px;
 }
 .a-hero h1 {
   margin-top: 22px;
   color: #fff;
   font-size: clamp(40px, 5.4vw, 72px);
-  font-weight: 700;
-  line-height: 0.98;
+  font-weight: 600;
   letter-spacing: -0.035em;
-  text-transform: uppercase;
+  line-height: 1.02;
 }
 .a-hero h1 span {
   display: block;
@@ -202,7 +192,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
 }
 .a-facts strong em {
@@ -326,13 +316,6 @@
   border-radius: 20px;
   border: 1px solid var(--border);
   background: #fff;
-  transition:
-    transform var(--t),
-    box-shadow var(--t);
-}
-.a-spec:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 32px rgb(6 32 25 / 0.08);
 }
 .a-spec-icon {
   width: 46px;
@@ -341,7 +324,7 @@
   display: grid;
   place-items: center;
   background: var(--night);
-  color: var(--lime);
+  color: #fff;
 }
 .a-spec-icon svg {
   width: 21px;
@@ -351,10 +334,8 @@
   display: block;
   margin-top: 22px;
   color: var(--muted);
-  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 13px;
 }
 .a-spec strong {
   display: block;
@@ -362,7 +343,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .a-spec p {
   margin-top: 6px;
@@ -389,13 +370,6 @@
   border-radius: 20px;
   border: 1px solid var(--border);
   background: var(--bg);
-  transition:
-    transform var(--t),
-    border-color var(--t);
-}
-.a-facility:hover {
-  transform: translateY(-2px);
-  border-color: #cfcab9;
 }
 .a-facility > span {
   width: 44px;
@@ -441,27 +415,13 @@
   padding: 36px;
   border-radius: 24px;
   color: #fff;
-  background:
-    radial-gradient(circle at 90% 0%, rgb(200 242 58 / 0.18) 0, rgb(200 242 58 / 0) 260px),
-    linear-gradient(160deg, #0b3325 0%, #062019 70%);
-}
-.a-price-card .pill-lime {
-  display: inline-flex;
-  align-items: center;
-  height: 28px;
-  padding: 0 12px;
-  border-radius: 999px;
-  color: var(--night);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  background: linear-gradient(160deg, #0b3325 0%, #062019 70%);
 }
 .a-price {
   margin-top: 24px;
   font-family: var(--font-display);
   font-size: 76px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.04em;
 }
@@ -472,6 +432,11 @@
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0;
+}
+.a-price-tag {
+  color: rgb(255 255 255 / 0.7);
+  font-size: 13px;
+  font-weight: 500;
 }
 .a-price-card > p {
   margin-top: 12px;
@@ -499,7 +464,7 @@
 .a-price-card li svg {
   width: 16px;
   height: 16px;
-  color: var(--lime);
+  color: rgb(255 255 255 / 0.6);
 }
 .a-price-info {
   display: flex;
@@ -517,7 +482,7 @@
   align-items: center;
   gap: 10px;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .a-info-card h3 svg {
   width: 19px;
@@ -553,7 +518,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .a-fine {
   margin-top: 10px;
@@ -620,7 +585,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .a-rules summary::-webkit-details-marker {
   display: none;
@@ -743,14 +708,13 @@
 .a-cta h2 {
   color: #fff;
   font-size: clamp(32px, 4vw, 52px);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
 }
 .a-cta h2 span {
   display: block;
-  color: var(--lime);
+  color: rgb(255 255 255 / 0.7);
 }
 .a-cta p {
   margin-top: 16px;
@@ -769,8 +733,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .a-hero-img,
-  .a-open i {
+  .a-hero-img {
     animation: none;
   }
 }

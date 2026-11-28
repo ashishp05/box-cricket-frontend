@@ -200,25 +200,13 @@
 }
 .offer {
   --o-bg: var(--offer-lime-bg);
-  --o-fg: var(--offer-lime-fg);
   position: relative;
   min-height: 186px;
   padding: 14px 16px;
   border-radius: 14px;
   background: var(--o-bg);
   color: #fff;
-}
-.offer[data-accent='sky'] {
-  --o-bg: var(--offer-sky-bg);
-  --o-fg: var(--offer-sky-fg);
-}
-.offer[data-accent='ball'] {
-  --o-bg: var(--offer-ball-bg);
-  --o-fg: var(--offer-ball-fg);
-}
-.offer[data-accent='amber'] {
-  --o-bg: var(--offer-amber-bg);
-  --o-fg: var(--offer-amber-fg);
+  --o-fg: #fff;
 }
 .offer-tag {
   position: absolute;
@@ -226,19 +214,19 @@
   right: 18px;
   width: 22px;
   height: 22px;
-  color: var(--o-fg);
+  color: rgb(255 255 255 / 0.5);
 }
 .offer-label {
   font-size: 30px;
   font-weight: 500;
-  color: var(--o-fg);
   letter-spacing: -0.02em;
   line-height: 1.1;
+  color: var(--lime);
 }
 .offer-title {
   margin-top: 2px;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 .offer-desc {
@@ -254,12 +242,12 @@
   height: 34px;
   padding: 0 10px;
   border-radius: 8px;
-  border: 1px solid color-mix(in srgb, var(--o-fg) 75%, transparent);
   background: transparent;
-  color: var(--o-fg);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 0.24);
 }
 .offer-code svg {
   width: 15px;
@@ -293,7 +281,6 @@
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
 }
 .auth-promo ul {
   list-style: none;

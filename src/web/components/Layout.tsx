@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MdConfirmationNumber, MdHome, MdOutlineConfirmationNumber, MdOutlineHome, MdOutlinePerson, MdPerson, MdPersonOutline, MdSportsCricket, MdStadium, MdOutlineStadium } from 'react-icons/md';
+import { LuCalendarPlus, LuHouse, LuLandPlot, LuTicket, LuUser } from 'react-icons/lu';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import { useCustomer } from '../session';
@@ -7,11 +7,11 @@ import { CONTACT_EMAIL } from '../content';
 import { Logo } from './art';
 
 const tabs = [
-  { to: '/', label: 'Home', icon: MdOutlineHome, active: MdHome, end: true },
-  { to: '/arena', label: 'Arena', icon: MdOutlineStadium, active: MdStadium },
-  { to: '/book', label: 'Book', icon: MdSportsCricket, active: MdSportsCricket, book: true },
-  { to: '/bookings', label: 'Bookings', icon: MdOutlineConfirmationNumber, active: MdConfirmationNumber },
-  { to: '/profile', label: 'Profile', icon: MdOutlinePerson, active: MdPerson },
+  { to: '/', label: 'Home', icon: LuHouse, active: LuHouse, end: true },
+  { to: '/arena', label: 'Arena', icon: LuLandPlot, active: LuLandPlot },
+  { to: '/book', label: 'Book', icon: LuCalendarPlus, active: LuCalendarPlus, book: true },
+  { to: '/bookings', label: 'Bookings', icon: LuTicket, active: LuTicket },
+  { to: '/profile', label: 'Profile', icon: LuUser, active: LuUser },
 ];
 
 export const TabBar = () => (
@@ -47,7 +47,7 @@ export const SiteHeader = () => {
             Home
           </NavLink>
           <NavLink to="/arena">Arena</NavLink>
-          <NavLink to="/bookings">My Bookings</NavLink>
+          <NavLink to="/bookings">My bookings</NavLink>
         </nav>
         <div className="header-actions">
           {customer ? (
@@ -57,15 +57,15 @@ export const SiteHeader = () => {
             </Link>
           ) : (
             <Link to="/auth" className="account-chip">
-              <MdPersonOutline aria-hidden /> Log in
+              <LuUser aria-hidden /> Log in
             </Link>
           )}
           <Link to="/book" className="header-book">
-            Book a Slot
+            Book a slot
           </Link>
         </div>
         <Link to="/profile" className="mobile-account" aria-label="Profile">
-          <MdPersonOutline aria-hidden />
+          <LuUser aria-hidden />
         </Link>
       </div>
     </header>

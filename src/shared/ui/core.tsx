@@ -9,7 +9,7 @@ import {
 } from 'react';
 
 import type { IconType } from 'react-icons';
-import { MdBolt, MdCheckCircle, MdCheckCircleOutline, MdClose, MdErrorOutline, MdInfoOutline } from 'react-icons/md';
+import { LuCircleAlert, LuCircleCheck, LuInfo, LuX, LuZap } from 'react-icons/lu';
 
 import { errorMessage } from '../api/client';
 import type { BookingStatus } from '../api/types';
@@ -168,7 +168,7 @@ export const Skeleton = ({ height = 16, width = '100%' }: { height?: number; wid
 
 type Tone = 'info' | 'warning' | 'danger' | 'success' | 'lime';
 const toneClass: Record<Tone, string> = { info: '', warning: 'amber', danger: 'danger', success: 'success', lime: 'lime' };
-const toneIcon: Record<Tone, IconType> = { info: MdInfoOutline, warning: MdErrorOutline, danger: MdErrorOutline, success: MdCheckCircleOutline, lime: MdBolt };
+const toneIcon: Record<Tone, IconType> = { info: LuInfo, warning: LuCircleAlert, danger: LuCircleAlert, success: LuCircleCheck, lime: LuZap };
 
 export const Banner = ({ tone = 'info', children, onClose }: { tone?: Tone; children: ReactNode; onClose?: () => void }) => {
   const Icon = toneIcon[tone];
@@ -178,7 +178,7 @@ export const Banner = ({ tone = 'info', children, onClose }: { tone?: Tone; chil
       <div className="grow">{children}</div>
       {onClose && (
         <button type="button" className="close" onClick={onClose} aria-label="Dismiss">
-          <MdClose size={20} />
+          <LuX size={20} />
         </button>
       )}
     </div>
@@ -219,7 +219,7 @@ const statusTone: Record<BookingStatus, string> = {
 
 export const StatusBadge = ({ status }: { status: BookingStatus }) => (
   <span className={cx('badge', statusTone[status])}>
-    {status === 'upcoming' && <MdCheckCircle aria-hidden />}
+    {status === 'upcoming' && <LuCircleCheck aria-hidden />}
     {statusLabel[status]}
   </span>
 );

@@ -18,7 +18,7 @@
 }
 .btn.lime {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
 }
 .btn.night:hover {
   background: #0c3326;
@@ -30,7 +30,7 @@
   padding: 0 10px;
   border-radius: 999px;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
@@ -90,7 +90,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .bk-chip.sm {
   height: 34px;
@@ -178,7 +178,7 @@
 .bk-secure svg {
   width: 14px;
   height: 14px;
-  color: var(--lime);
+  color: rgb(255 255 255 / 0.6);
 }
 .bk-steps {
   display: flex;
@@ -209,7 +209,7 @@
 }
 .bk-steps li.done::before,
 .bk-steps li.current::before {
-  background: var(--lime);
+  background: rgb(255 255 255 / 0.5);
 }
 .bk-dot {
   width: 28px;
@@ -228,9 +228,9 @@
   color: rgb(255 255 255 / 0.8);
 }
 .bk-steps li.done .bk-dot {
-  background: var(--lime);
-  border-color: var(--lime);
   color: var(--night);
+  background: rgb(255 255 255 / 0.9);
+  border-color: transparent;
 }
 .bk-steps li.current {
   color: #fff;
@@ -238,7 +238,6 @@
 .bk-steps li.current .bk-dot {
   border-color: var(--lime);
   color: var(--lime);
-  box-shadow: 0 0 0 4px rgb(200 242 58 / 0.15);
 }
 .bk-progress,
 .bk-progress-text {
@@ -268,7 +267,7 @@
 }
 .bk-head h1 {
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 .bk-head p {
@@ -288,7 +287,7 @@
   gap: 10px;
   margin-bottom: 18px;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-card-title svg {
   width: 19px;
@@ -344,7 +343,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-arena span {
   display: flex;
@@ -364,7 +363,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-rate small {
   color: var(--muted);
@@ -390,7 +389,7 @@
   align-items: center;
   gap: 8px;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-sum h3 svg {
   width: 18px;
@@ -416,10 +415,10 @@
   font-weight: 600;
 }
 .bk-sum-date strong {
-  color: var(--lime);
   font-family: var(--font-display);
   font-size: 54px;
   line-height: 1.05;
+  color: #fff;
 }
 .bk-sum-free {
   text-align: center;
@@ -472,7 +471,7 @@
   margin: 4px 0 0;
   color: var(--ink);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-facts > div:first-child {
   grid-column: 1 / -1;
@@ -520,7 +519,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-price-skel {
   display: flex;
@@ -560,7 +559,7 @@
   height: 30px;
   padding: 0 12px;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 600;
 }
 @keyframes bk-shimmer {
   to {
@@ -673,7 +672,7 @@
   color: var(--ink);
   font-size: 15px;
   font-weight: 600;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .cal-day.open {
   background: #eef8f1;
@@ -859,7 +858,7 @@
   color: var(--ink);
   font-size: 13px;
   font-weight: 600;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .ts-filters button svg {
   width: 15px;
@@ -879,8 +878,8 @@
   color: #fff;
 }
 .ts-filters button[aria-selected='true'] small {
-  background: var(--lime);
-  color: var(--night);
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
 }
 .ts-group + .ts-group {
   margin-top: 22px;
@@ -930,16 +929,12 @@
   border-radius: 14px;
   border: 1.5px solid;
   text-align: left;
-  transition:
-    transform var(--t),
-    background var(--t),
-    border-color var(--t),
-    box-shadow var(--t);
+  transition: background-color var(--t), border-color var(--t);
 }
 .ts-slot .t {
   font-family: var(--font-display);
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .ts-slot .to {
   font-size: 11px;
@@ -948,7 +943,7 @@
 .ts-slot .m {
   margin-top: 6px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .ts-slot .corner {
   position: absolute;
@@ -963,15 +958,12 @@
   color: #0b5a3b;
 }
 .ts-slot.available:hover {
-  transform: translateY(-2px);
   border-color: var(--success);
-  box-shadow: 0 8px 18px rgb(19 138 87 / 0.14);
 }
 .ts-slot.selected {
   background: var(--lime);
   border-color: #a9d21f;
   color: var(--night);
-  box-shadow: 0 8px 22px rgb(200 242 58 / 0.45);
 }
 .ts-slot.booked {
   background: #f1efe8;
@@ -1091,7 +1083,7 @@
   border: 1.5px dashed #cfcab9;
   background: #fff;
   text-align: left;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .bk-offer:hover:not(:disabled) {
   border-color: var(--primary);
@@ -1119,7 +1111,7 @@
   font-style: normal;
   color: var(--primary);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-offer.off {
   opacity: 0.55;
@@ -1298,7 +1290,7 @@
   text-align: center;
   font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-quick {
   display: flex;
@@ -1333,7 +1325,7 @@
   border: 1.5px solid var(--border);
   background: #fff;
   text-align: left;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .bk-method:hover {
   border-color: #cfcab9;
@@ -1341,7 +1333,7 @@
 .bk-method.on {
   border-color: var(--night);
   background: #fbfdf4;
-  box-shadow: 0 0 0 3px rgb(200 242 58 / 0.4);
+  box-shadow: inset 0 0 0 1px var(--night);
 }
 .bk-method-icon {
   width: 44px;
@@ -1354,7 +1346,7 @@
 }
 .bk-method.on .bk-method-icon {
   background: var(--night);
-  color: var(--lime);
+  color: #fff;
 }
 .bk-method-icon svg {
   width: 20px;
@@ -1450,25 +1442,16 @@
   gap: 16px;
   border-color: #f3c4be;
   background: #fffafa;
-  animation: bk-shake 0.4s ease;
 }
 .bk-payfail h2 {
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--danger);
 }
 .bk-payfail p {
   margin-top: 4px;
   color: var(--ink);
   font-size: 14px;
-}
-@keyframes bk-shake {
-  25% {
-    transform: translateX(-4px);
-  }
-  75% {
-    transform: translateX(4px);
-  }
 }
 .bk-state-icon {
   width: 52px;
@@ -1510,7 +1493,7 @@
 .bk-state.bk-fail h2 {
   margin-top: 16px;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .bk-state.bk-fail p {
   margin-top: 8px;
@@ -1541,8 +1524,7 @@
   place-items: center;
   background: var(--lime);
   color: var(--night);
-  box-shadow: 0 0 0 12px rgb(200 242 58 / 0.25);
-  animation: cf-pop 0.6s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+  animation: cf-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .cf-tick svg {
   width: 44px;
@@ -1556,11 +1538,10 @@
 .cf-hero.pending .cf-tick {
   background: var(--amber-bg);
   color: var(--amber);
-  box-shadow: 0 0 0 12px rgb(255 241 214 / 0.6);
 }
 @keyframes cf-pop {
   from {
-    transform: scale(0.3);
+    transform: scale(0.9);
     opacity: 0;
   }
 }
@@ -1572,7 +1553,7 @@
 .cf-hero h1 {
   margin-top: 28px;
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.03em;
 }
 .cf-hero p {
@@ -1700,9 +1681,7 @@
 .qt-top {
   padding: 24px;
   color: #fff;
-  background:
-    radial-gradient(circle at 100% 0%, rgb(200 242 58 / 0.16) 0, rgb(200 242 58 / 0) 200px),
-    linear-gradient(160deg, #0b3325 0%, #062019 80%);
+  background: linear-gradient(160deg, #0b3325 0%, #062019 80%);
 }
 .qt-row {
   display: flex;
@@ -1714,11 +1693,11 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--lime);
   font-family: var(--font-display);
   font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
 }
 .qt-id button {
   width: 28px;
@@ -1753,10 +1732,8 @@
 .qt-facts small {
   display: block;
   color: rgb(255 255 255 / 0.5);
-  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 12px;
 }
 .qt-facts b {
   display: block;
@@ -1852,12 +1829,10 @@
 }
 .bd-sec h4 {
   margin-bottom: 10px;
-  color: var(--muted);
   font-family: var(--font);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
 }
 .bd-sec dl {
   margin: 0;
@@ -1909,7 +1884,7 @@
 .bd-page h1 {
   margin: 10px 0 22px;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .rs-days {
   display: flex;
@@ -1940,7 +1915,7 @@
 .rs-days button[aria-pressed='true'] {
   background: var(--night);
   border-color: var(--night);
-  color: var(--lime);
+  color: #fff;
 }
 .rs-days button[aria-pressed='true'] small {
   color: rgb(255 255 255 / 0.6);
@@ -1955,7 +1930,7 @@
 }
 .mb-head h1 {
   font-size: clamp(30px, 4vw, 44px);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.03em;
 }
 .mb-head p {
@@ -1984,7 +1959,7 @@
   color: var(--muted);
   font-size: 14px;
   font-weight: 600;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .mb-tabs button svg {
   width: 16px;
@@ -2002,8 +1977,8 @@
   color: #fff;
 }
 .mb-tabs button[aria-selected='true'] span {
-  background: var(--lime);
-  color: var(--night);
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
 }
 .mb-list {
   display: flex;
@@ -2059,8 +2034,7 @@
 .mb-date small {
   color: var(--muted);
   font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
+  font-weight: 600;
 }
 .mb-date b {
   font-family: var(--font-display);
@@ -2081,7 +2055,7 @@
 }
 .mb-top h3 {
   font-size: 19px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .mb-id {
   color: var(--muted);
@@ -2091,7 +2065,7 @@
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .mb-when {
   display: flex;
@@ -2152,7 +2126,7 @@
 .mb-empty h2 {
   margin-top: 18px;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .mb-empty p {
   max-width: 420px;
@@ -2166,8 +2140,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cf-tick,
-  .cf-tick path,
-  .bk-payfail {
+  .cf-tick path {
     animation: none;
     stroke-dashoffset: 0;
   }
@@ -2198,7 +2171,7 @@
     color: #fff;
     font-family: var(--font-display);
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 600;
   }
   .bk-header-row::after {
     content: '';
@@ -2292,7 +2265,7 @@
   .bk-bar small.lime {
     color: var(--lime);
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
   }
   .bk-bar .btn {
     flex: none;

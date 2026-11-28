@@ -311,7 +311,6 @@ svg {
 .btn.lime {
   background: var(--lime);
   color: var(--night);
-  box-shadow: 0 8px 24px rgb(200 242 58 / 0.25);
 }
 .btn.lime:hover {
   filter: brightness(1.04);
@@ -468,7 +467,7 @@ svg {
   color: var(--ink);
   font-size: 15px;
   font-weight: 500;
-  transition: all var(--t);
+  transition: background-color var(--t), border-color var(--t), color var(--t);
 }
 .chip svg {
   width: 18px;

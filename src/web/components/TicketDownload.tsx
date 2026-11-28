@@ -160,7 +160,7 @@ const drawTicket = async (b: Booking, qr: HTMLCanvasElement, address: string) =>
 };
 
 // "Download ticket" button. Only for paid bookings: the entry QR is only valid once confirmed.
-export const TicketDownload = ({ booking, address, className, label = 'Download Ticket' }: { booking: Booking; address: string; className?: string; label?: string }) => {
+export const TicketDownload = ({ booking, address, className, label = 'Download ticket' }: { booking: Booking; address: string; className?: string; label?: string }) => {
   const qrRef = useRef<HTMLCanvasElement>(null);
   const [busy, setBusy] = useState(false);
   const allowed = booking.status === 'upcoming' || booking.status === 'completed';

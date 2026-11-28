@@ -44,7 +44,7 @@ export const HoldTimer = ({ secondsLeft, total, label = 'Your slots are held for
   return (
     <div className={cx('bk-timer', urgent && 'urgent')} role="timer" aria-live="off">
       <LuTimer aria-hidden />
-      <span className="grow">{urgent ? 'Hurry! Your slots are about to be released' : label}</span>
+      <span className="grow">{urgent ? 'Your slots are about to be released' : label}</span>
       <b>{clock(secondsLeft)}</b>
       <i style={{ width: `${Math.max(0, Math.min(100, (secondsLeft / total) * 100))}%` }} />
     </div>

@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { type FormEvent, useEffect, useState } from 'react';
-import { MdCheckCircle } from 'react-icons/md';
+import { LuCircleCheck } from 'react-icons/lu';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { errorMessage } from '@shared/api/client';
@@ -155,14 +155,14 @@ export const Auth = () => {
         <ul>
           {['See live slots and exact prices', 'Hold your slot while you pay', 'Manage, reschedule or cancel anytime'].map((t) => (
             <li key={t}>
-              <MdCheckCircle aria-hidden /> {t}
+              <LuCircleCheck aria-hidden /> {t}
             </li>
           ))}
         </ul>
       </div>
 
       <div className="card auth-card">
-        <h1>{step === 'name' ? 'One last thing' : LOGIN_WITH_OTP ? 'Login or sign up' : 'Your Details'}</h1>
+        <h1>{step === 'name' ? 'One last thing' : LOGIN_WITH_OTP ? 'Login or sign up' : 'Your details'}</h1>
         <p className="muted" style={{ marginTop: 4 }}>
           {step === 'name' ? 'What name should we put on your bookings?' : LOGIN_WITH_OTP ? 'Takes 20 seconds. No password needed.' : 'Enter your name and mobile number to book and manage your games.'}
         </p>

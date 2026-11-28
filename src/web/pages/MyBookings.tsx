@@ -174,7 +174,7 @@ const List = () => {
         <h2>No matches booked yet.</h2>
         <p>Floodlit turf, a flat hourly rate and instant confirmation. Your first game is a few taps away.</p>
         <Link to="/book" className="h-btn lime lg">
-          Book Your First Match <LuArrowRight aria-hidden />
+          Book your first match <LuArrowRight aria-hidden />
         </Link>
       </div>
     );
@@ -194,7 +194,7 @@ const List = () => {
           <LuCalendarClock aria-hidden /> Upcoming <span>{upcoming.length}</span>
         </button>
         <button type="button" role="tab" aria-selected={tab === 'history'} onClick={() => setTab('history')}>
-          <LuHistory aria-hidden /> Booking History <span>{history.length}</span>
+          <LuHistory aria-hidden /> Booking history <span>{history.length}</span>
         </button>
       </div>
 
@@ -204,7 +204,7 @@ const List = () => {
           <h2>{tab === 'upcoming' ? 'No upcoming matches' : 'No past games yet'}</h2>
           <p>{tab === 'upcoming' ? 'Your next game will show up here with its entry QR.' : 'Finished and cancelled games will appear here.'}</p>
           <Link to="/book" className="h-btn lime lg">
-            Book a Match <LuArrowRight aria-hidden />
+            Book a match <LuArrowRight aria-hidden />
           </Link>
         </div>
       ) : (
@@ -237,7 +237,7 @@ export const MyBookings = () => (
     <div className="container">
       <header className="mb-head">
         <span className="a-eyebrow">My bookings</span>
-        <h1>Your Games, All in One Place</h1>
+        <h1>Your games, all in one place</h1>
         <p>Manage your upcoming matches and revisit your previous games.</p>
       </header>
       <RequireLogin>

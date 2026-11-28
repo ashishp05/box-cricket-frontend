@@ -98,7 +98,7 @@ const ConfirmedInner = ({ id }: { id: string }) => {
             <LuHourglass />
           )}
         </div>
-        <h1>{paid ? 'Booking Confirmed!' : 'Booking received'}</h1>
+        <h1>{paid ? 'Booking confirmed' : 'Booking received'}</h1>
         <p>
           {paid
             ? `You're all set for ${longDate(b.date)}. We've sent the details to ${phoneText(b.customerPhone)}.`
@@ -169,7 +169,7 @@ const ConfirmedInner = ({ id }: { id: string }) => {
           <div className="cf-actions">
             <TicketDownload booking={b} address={address} className="lime lg block" />
             <Link to="/bookings" className="btn outline lg block">
-              <LuListChecks aria-hidden /> View My Bookings
+              <LuListChecks aria-hidden /> View my bookings
             </Link>
             <button type="button" className="bk-link" onClick={() => void share(b)}>
               <LuShare2 aria-hidden /> Share with your team

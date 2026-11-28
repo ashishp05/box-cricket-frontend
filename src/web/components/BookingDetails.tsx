@@ -117,7 +117,7 @@ export const QrTicket = ({ booking: b, size = 150 }: { booking: Booking; size?: 
           {b.status === 'cancelled'
             ? 'This booking was cancelled, so the entry QR is no longer valid.'
             : b.status === 'completed'
-              ? 'Thanks for playing! This ticket has been used.'
+              ? 'Thanks for playing. This ticket has been used.'
               : active
                 ? 'Show this QR at the gate. Arrive 10 minutes early.'
                 : 'Your entry QR appears as soon as the payment is confirmed.'}

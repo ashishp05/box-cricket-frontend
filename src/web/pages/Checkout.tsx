@@ -151,7 +151,7 @@ export const Checkout = () => {
       <div className="bk-layout">
         <div className="bk-main-col">
           <div className="bk-head">
-            <h1>Booking Summary</h1>
+            <h1>Booking summary</h1>
             <p>Check your game before adding your details.</p>
           </div>
           {secondsLeft !== null && <HoldTimer secondsLeft={secondsLeft} total={HOLD_SECONDS} />}

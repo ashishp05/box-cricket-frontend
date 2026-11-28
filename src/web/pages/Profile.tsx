@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { type FormEvent, useEffect, useState } from 'react';
-import { MdArrowForward, MdChevronRight, MdDescription, MdHeadsetMic, MdHelpOutline, MdLogout, MdOutlineAdminPanelSettings, MdOutlineConfirmationNumber } from 'react-icons/md';
+import { LuArrowRight, LuChevronRight, LuCircleHelp, LuFileText, LuHeadphones, LuLogOut, LuShieldCheck, LuTicket } from 'react-icons/lu';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { ApiError, errorMessage } from '@shared/api/client';
@@ -111,7 +111,7 @@ export const Profile = () => {
             <h3>Play more, wait less</h3>
             <p>Log in to see your tickets, rebook in one tap and get offers for regulars.</p>
             <Link to="/auth?from=/profile" className="btn lime lg" style={{ paddingInline: 24 }}>
-              Log in or sign up <MdArrowForward aria-hidden />
+              Log in or sign up <LuArrowRight aria-hidden />
             </Link>
           </div>
         )}
@@ -120,23 +120,23 @@ export const Profile = () => {
 
         <nav className="card menu-list" aria-label="Profile menu">
           <Link to="/bookings">
-            <MdOutlineConfirmationNumber aria-hidden /> My bookings <MdChevronRight className="chev" aria-hidden />
+            <LuTicket aria-hidden /> My bookings <LuChevronRight className="chev" aria-hidden />
           </Link>
           <a href={ADMIN_PANEL_URL}>
-            <MdOutlineAdminPanelSettings aria-hidden /> Counter admin <MdChevronRight className="chev" aria-hidden />
+            <LuShieldCheck aria-hidden /> Counter admin <LuChevronRight className="chev" aria-hidden />
           </a>
           <a href="tel:+917507197507">
-            <MdHeadsetMic aria-hidden /> Call +91 75071 97507 <MdChevronRight className="chev" aria-hidden />
+            <LuHeadphones aria-hidden /> Call +91 75071 97507 <LuChevronRight className="chev" aria-hidden />
           </a>
           <Link to="/#faq">
-            <MdHelpOutline aria-hidden /> Help and FAQs <MdChevronRight className="chev" aria-hidden />
+            <LuCircleHelp aria-hidden /> Help and FAQs <LuChevronRight className="chev" aria-hidden />
           </Link>
           <Link to="/terms">
-            <MdDescription aria-hidden /> Terms and privacy <MdChevronRight className="chev" aria-hidden />
+            <LuFileText aria-hidden /> Terms and privacy <LuChevronRight className="chev" aria-hidden />
           </Link>
           {customer && (
             <button type="button" onClick={() => setConfirmLogout(true)} style={{ color: '#e23d2e' }}>
-              <MdLogout aria-hidden style={{ color: '#e23d2e' }} /> Log out
+              <LuLogOut aria-hidden style={{ color: '#e23d2e' }} /> Log out
             </button>
           )}
         </nav>

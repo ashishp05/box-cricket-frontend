@@ -14,10 +14,10 @@ export const MapCard = ({ address, phone }: { address: string; phone: string }) 
     </p>
     <div className="map-actions">
       <a className="h-btn dark" href={mapsUrl(address)} target="_blank" rel="noreferrer">
-        <LuNavigation aria-hidden /> Get Directions
+        <LuNavigation aria-hidden /> Get directions
       </a>
       <a className="h-btn light" href={`tel:${phone.replace(/\s/g, '')}`}>
-        <LuPhone aria-hidden /> Call Venue
+        <LuPhone aria-hidden /> Call venue
       </a>
     </div>
   </div>

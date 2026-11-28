@@ -99,11 +99,11 @@ export const Arena = () => {
             <Link to="/">Home</Link> <span aria-hidden>/</span> <span aria-current="page">Arena</span>
           </nav>
           <div className="a-hero-copy">
-            <span className="pill-lime a-open">
+            <span className="a-open">
               <i /> {allDay ? 'Open now · 24 hours' : hours}
             </span>
             <h1>
-              Explore The <span>Riverside Arena</span>
+              Explore the <span>Riverside arena</span>
             </h1>
             <p>
               A floodlit, fully netted box on the Ashmavati Riverfront. Premium turf, a marked centre pitch and the same flat price at any hour — built for
@@ -114,15 +114,15 @@ export const Arena = () => {
                 <LuMapPin aria-hidden /> {v ? `${v.area}, ${v.city}` : 'Ashmavati Riverfront, Porbandar'}
               </span>
               <span>
-                <Stars /> <b>{rating.score}</b> <em>({rating.count} reviews)</em>
+                <Stars /> <b>{rating.score}</b> <em>rating</em>
               </span>
             </div>
             <div className="a-hero-actions">
               <Link to="/book" className="h-btn lime lg">
-                Book This Arena <LuArrowRight aria-hidden />
+                Book this arena <LuArrowRight aria-hidden />
               </Link>
               <a href="#gallery" className="h-btn ghost-light lg">
-                <LuImages aria-hidden /> View Gallery
+                <LuImages aria-hidden /> View gallery
               </a>
               <button type="button" className="h-btn ghost-light lg icon" onClick={() => void share()} aria-label="Share this arena">
                 <LuShare2 aria-hidden />
@@ -159,7 +159,7 @@ export const Arena = () => {
             </strong>
           </div>
           <Link to={next.data ? `/book?date=${next.data.date}` : '/book'} className="h-btn dark">
-            Check Slots <LuArrowRight aria-hidden />
+            Check slots <LuArrowRight aria-hidden />
           </Link>
         </div>
       </div>
@@ -167,7 +167,7 @@ export const Arena = () => {
       {/* Gallery */}
       <section className="h-band cream a-first" id="gallery">
         <div className="container">
-          <SectionTitle eyebrow="Gallery" title="See the Arena" sub="Tap any photo to view it full screen" />
+          <SectionTitle eyebrow="Gallery" title="See the arena" sub="Tap any photo to view it full screen" />
           <Gallery venueName={name} withTabs />
         </div>
       </section>
@@ -203,7 +203,7 @@ export const Arena = () => {
             <div className="a-collage-badge">
               <strong>{rating.score}</strong>
               <Stars />
-              <span>{rating.count} player reviews</span>
+              <span>Player rating</span>
             </div>
           </div>
         </div>
@@ -212,7 +212,7 @@ export const Arena = () => {
       {/* Specs */}
       <section className="h-band cream">
         <div className="container">
-          <SectionTitle eyebrow="Ground specifications" title="Know the Ground" sub="Verified details from the venue" />
+          <SectionTitle eyebrow="Ground specifications" title="Know the ground" sub="Verified details from the venue" />
           <div className="a-specs">
             {specs.map((s) => (
               <SpecCard key={s.label} {...s} />
@@ -224,7 +224,7 @@ export const Arena = () => {
       {/* Facilities */}
       <section className="h-band">
         <div className="container">
-          <SectionTitle eyebrow="Facilities" title="Everything Your Team Needs" sub="Included with every booking" />
+          <SectionTitle eyebrow="Facilities" title="Everything your team needs" sub="Included with every booking" />
           <div className="a-facilities">
             {facilities.map(({ name: f, icon: Icon, desc }) => (
               <div key={f} className="a-facility">
@@ -242,17 +242,17 @@ export const Arena = () => {
       {/* Pricing */}
       <section className="h-band cream" id="pricing">
         <div className="container">
-          <SectionTitle eyebrow="Pricing" title="One Simple Price" sub="No peak hours, no weekend surcharge" />
+          <SectionTitle eyebrow="Pricing" title="One simple price" sub="No peak hours, no weekend surcharge" />
           <div className="a-pricing">
             <div className="a-price-card">
-              <span className="pill-lime">All hours · Same price</span>
+              <span className="a-price-tag">Same price at every hour</span>
               <div className="a-price">
                 {rate}
                 <small>/ hour</small>
               </div>
               <p>Flat rate any hour, any day. {hours}.</p>
               <Link to="/book" className="h-btn lime lg">
-                Book Your Slot <LuArrowRight aria-hidden />
+                Book your slot <LuArrowRight aria-hidden />
               </Link>
               <ul>
                 <li>
@@ -357,7 +357,7 @@ export const Arena = () => {
       <section className="h-band" id="location">
         <div className="container a-location">
           <div>
-            <SectionTitle eyebrow="Location" title="Find the Arena" sub="On the Ashmavati Riverfront, M. G. Road" />
+            <SectionTitle eyebrow="Location" title="Find the arena" sub="On the Ashmavati Riverfront, M. G. Road" />
             <ul className="a-getting">
               <li>
                 <span>
@@ -395,7 +395,7 @@ export const Arena = () => {
       {/* FAQ + CTA */}
       <section className="h-band cream" id="faq">
         <div className="container">
-          <SectionTitle eyebrow="FAQ" title="Arena Questions" sub="Everything players usually ask before booking" />
+          <SectionTitle eyebrow="FAQ" title="Arena questions" sub="Everything players usually ask before booking" />
           <div className="h-faq">
             {arenaFaqs.map(([q, a], i) => (
               <details key={q} open={i === 0}>
@@ -416,7 +416,7 @@ export const Arena = () => {
               <p>Pick a slot, pay online and walk in with your QR ticket.</p>
               <div className="a-cta-actions">
                 <Link to="/book" className="h-btn lime lg">
-                  Book Your Slot <LuArrowRight aria-hidden />
+                  Book your slot <LuArrowRight aria-hidden />
                 </Link>
                 {v && (
                   <a href={`tel:${v.phone.replace(/\s/g, '')}`} className="h-btn ghost-light lg">
@@ -439,7 +439,7 @@ export const Arena = () => {
           <span>{next.data ? `Next: ${shortDate(next.data.date)}, ${hourLabel(next.data.hours[0])}` : hours}</span>
         </div>
         <Link to={next.data ? `/book?date=${next.data.date}` : '/book'} className="h-btn lime">
-          Book Now <LuArrowRight aria-hidden />
+          Book now <LuArrowRight aria-hidden />
         </Link>
       </div>
     </div>

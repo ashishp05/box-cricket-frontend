@@ -159,7 +159,7 @@ export const Book = () => {
         <div className="bk-layout">
           <div className="bk-main-col">
             <div className="bk-head">
-              <h1>Book Your Game</h1>
+              <h1>Book your game</h1>
               <p>Pick a day, then choose your hours. Live availability, instant confirmation.</p>
             </div>
             <ArenaHeader name={name} sub={arenaSub} rate={v?.settings.hourlyRate} />
@@ -244,7 +244,7 @@ export const Book = () => {
       <div className="bk-layout">
         <div className="bk-main-col">
           <div className="bk-head">
-            <h1>Pick Your Time</h1>
+            <h1>Pick your time</h1>
             <p>Tap one slot, or several back-to-back hours for a longer game.</p>
           </div>
 

@@ -7,12 +7,12 @@ export const facilities: { name: string; icon: IconType; desc: string }[] = [
   { name: 'Floodlights', icon: LuLampCeiling, desc: 'Bright LED lights for night games' },
   { name: 'Parking', icon: LuCar, desc: 'Free parking on site' },
   { name: 'Washrooms', icon: LuBath, desc: 'Clean washrooms at the venue' },
-  { name: 'Drinking Water', icon: LuDroplets, desc: 'Water available for players' },
-  { name: 'Changing Room', icon: LuShirt, desc: 'Change before and after play' },
-  { name: 'Cafe & Snacks', icon: LuCoffee, desc: 'Drinks and snacks between overs' },
-  { name: 'Spectator Seating', icon: LuUsers, desc: 'Seats for friends and family' },
-  { name: 'Equipment Rental', icon: LuPackage, desc: 'Rent a bat at the arena' },
-  { name: 'First Aid', icon: LuHeartPulse, desc: 'First aid kit kept on site' },
+  { name: 'Drinking water', icon: LuDroplets, desc: 'Water available for players' },
+  { name: 'Changing room', icon: LuShirt, desc: 'Change before and after play' },
+  { name: 'Cafe & snacks', icon: LuCoffee, desc: 'Drinks and snacks between overs' },
+  { name: 'Spectator seating', icon: LuUsers, desc: 'Seats for friends and family' },
+  { name: 'Equipment rental', icon: LuPackage, desc: 'Rent a bat at the arena' },
+  { name: 'First aid', icon: LuHeartPulse, desc: 'First aid kit kept on site' },
   { name: 'CCTV', icon: LuCctv, desc: 'Venue covered by cameras' },
 ];
 

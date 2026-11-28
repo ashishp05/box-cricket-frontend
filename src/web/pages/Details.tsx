@@ -109,7 +109,7 @@ export const Details = () => {
       <div className="bk-layout">
         <div className="bk-main-col">
           <div className="bk-head">
-            <h1>Your Details</h1>
+            <h1>Your details</h1>
             <p>We'll send the confirmation and ticket to your mobile number.</p>
           </div>
           {secondsLeft !== null && <HoldTimer secondsLeft={secondsLeft} total={HOLD_SECONDS} />}

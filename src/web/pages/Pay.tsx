@@ -242,14 +242,14 @@ const PayInner = ({ id }: { id: string }) => {
                     <strong>
                       <LuQrCode aria-hidden /> Scan to pay {rupees(b.price.total)}
                     </strong>
-                    <p>Open any UPI app and scan this code{order.mock ? '' : ', or tap Pay Now to choose your UPI app'}.</p>
-                    <p className="bk-fine">{order.mock ? 'Test mode: tap Pay Now to complete a test payment.' : 'This page updates by itself once you pay.'}</p>
+                    <p>Open any UPI app and scan this code{order.mock ? '' : ', or tap Pay now to choose your UPI app'}.</p>
+                    <p className="bk-fine">{order.mock ? 'Test mode: tap Pay now to complete a test payment.' : 'This page updates by itself once you pay.'}</p>
                   </div>
                 </div>
               ) : (
                 <p className="bk-paynote">
                   {order.mock
-                    ? 'Test mode: Razorpay keys are not set on the server, so Pay Now completes a test payment.'
+                    ? 'Test mode: Razorpay keys are not set on the server, so Pay now completes a test payment.'
                     : method === 'upi_qr'
                       ? 'Tap Pay Now to open secure checkout and pick your UPI app.'
                       : "Tap Pay Now to enter your card in Razorpay's secure checkout. We never see or store your card number."}
@@ -275,7 +275,7 @@ const PayInner = ({ id }: { id: string }) => {
             <SlotFacts slot={b} compact />
             <PriceLines price={b.price} />
             <Button variant="primary" size="lg" block disabled={!order || processing} loading={createOrder.isPending} onClick={() => void pay()}>
-              <LuLock aria-hidden /> Pay Now · {rupees(b.price.total)}
+              <LuLock aria-hidden /> Pay now · {rupees(b.price.total)}
             </Button>
             <p className="bk-note">
               Booked by {b.customerName} · {b.players ?? '—'} players
@@ -290,7 +290,7 @@ const PayInner = ({ id }: { id: string }) => {
           <small>Total payable</small>
         </span>
         <Button variant="primary" size="lg" disabled={!order || processing} onClick={() => void pay()}>
-          <LuLock aria-hidden /> Pay Now
+          <LuLock aria-hidden /> Pay now
         </Button>
       </div>
 

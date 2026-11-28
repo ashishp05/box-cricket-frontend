@@ -1,21 +1,5 @@
 import { useState } from 'react';
-import {
-  LuArrowRight,
-  LuBadgeCheck,
-  LuCalendar,
-  LuCalendarDays,
-  LuClock,
-  LuCreditCard,
-  LuEye,
-  LuInfo,
-  LuMapPin,
-  LuRefreshCw,
-  LuShieldCheck,
-  LuTrophy,
-  LuZap,
-  LuChevronDown,
-} from 'react-icons/lu';
-import { MdStar } from 'react-icons/md';
+import { LuArrowRight, LuBadgeCheck, LuCalendar, LuCalendarDays, LuChevronDown, LuClock, LuCreditCard, LuEye, LuInfo, LuMapPin, LuRefreshCw, LuShieldCheck, LuStar, LuTrophy, LuZap } from 'react-icons/lu';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { hourLabel, rupees, shortDate } from '@shared/lib/format';
@@ -30,7 +14,7 @@ import { useNextFree, useOffers, useVenue } from '../hooks';
 export const Stars = ({ count = 5 }: { count?: number }) => (
   <span className="stars" aria-label={`${count} out of 5 stars`}>
     {Array.from({ length: count }, (_, i) => (
-      <MdStar key={i} aria-hidden />
+      <LuStar key={i} fill="currentColor" strokeWidth={0} aria-hidden />
     ))}
   </span>
 );
@@ -92,7 +76,7 @@ const CheckSlots = () => {
         )}
       </div>
       <button type="button" className="see-slots" onClick={() => navigate(`/book?date=${next.data?.date ?? from}`)}>
-        <LuEye aria-hidden /> See Open Slots <LuArrowRight aria-hidden />
+        <LuEye aria-hidden /> See open slots <LuArrowRight aria-hidden />
       </button>
       <p className="check-foot">No calls needed · Instant confirmation</p>
     </div>
@@ -100,10 +84,10 @@ const CheckSlots = () => {
 };
 
 const steps = [
-  [LuCalendarDays, 'Pick a Date', 'See which hours are free in each box'],
-  [LuClock, 'Pick Your Slot', 'See live availability and the exact price'],
-  [LuCreditCard, 'Pay Securely', 'UPI, cards or wallets. Slots are held while you pay'],
-  [LuTrophy, 'Play!', 'Show your QR at the venue and start the match'],
+  [LuCalendarDays, 'Pick a date', 'See which hours are free in each box'],
+  [LuClock, 'Pick your slot', 'See live availability and the exact price'],
+  [LuCreditCard, 'Pay securely', 'UPI, cards or wallets. Slots are held while you pay'],
+  [LuTrophy, 'Play', 'Show your QR at the venue and start the match'],
 ] as const;
 
 export const Home = () => {
@@ -120,19 +104,10 @@ export const Home = () => {
     <div className="home-page">
       <section className="h-hero">
         <img className="h-hero-img" src="/images/arena-night.webp" alt="" fetchPriority="high" />
-        <div className="h-hero-glow" aria-hidden />
         <div className="container h-hero-grid">
           <div className="h-hero-copy">
-            <div className="h-pills">
-              <span className="pill-lime">
-                <i /> Live slots
-              </span>
-              <span className="pill-white">
-                <LuZap aria-hidden /> Instant confirmation
-              </span>
-            </div>
             <h1 className="h-hero-title">
-              Play by the <span>Riverfront.</span>
+              Play by the <span>riverfront</span>
             </h1>
             <p className="h-hero-sub">
               Floodlit box cricket at {v?.area ?? 'Ashmavati Riverfront'}, {v?.city ?? 'Porbandar'}. {hours}, flat {rate}/hr — see live slots and lock your game
@@ -140,7 +115,7 @@ export const Home = () => {
             </p>
             <div className="h-hero-meta">
               <span>
-                <Stars /> <b>{rating.score}</b> <em>({rating.count} reviews)</em>
+                <Stars /> <b>{rating.score}</b> <em>rating</em>
               </span>
               <span className="lime">{rate}/hr flat</span>
               <span>
@@ -160,7 +135,7 @@ export const Home = () => {
           </div>
           <div>
             <strong className="green">{rate}</strong>
-            <span>Per Hour</span>
+            <span>Per hour</span>
           </div>
           <div>
             <strong>{rating.score}</strong>
@@ -168,19 +143,19 @@ export const Home = () => {
           </div>
           <div>
             <strong>{allDay ? 'Open' : hourLabel(v!.openHour)}</strong>
-            <span>{allDay ? '24 Hours' : `to ${hourLabel(v!.closeHour)}`}</span>
+            <span>{allDay ? '24 hours' : `to ${hourLabel(v!.closeHour)}`}</span>
           </div>
         </div>
       </section>
 
       <section className="h-band cream">
         <div className="container">
-          <SectionTitle title="Meet the Arena" sub={`M. G. Road, ${v?.city ?? 'Porbandar'}`} />
+          <SectionTitle title="Meet the arena" sub={`M. G. Road, ${v?.city ?? 'Porbandar'}`} />
           <div className="h-arena">
             <Gallery venueName={v?.name ?? 'The Riverside Cricket Box'} />
             <aside className="h-arena-side">
               <div className="ground-info">
-                <h3>Ground Info</h3>
+                <h3>Ground info</h3>
                 <ul>
                   <li>
                     <span className="gi-icon">
@@ -195,13 +170,13 @@ export const Home = () => {
                     <span className="gi-icon">
                       <LuClock aria-hidden />
                     </span>
-                    <span>{allDay ? 'Open 24 Hours, 7 Days' : hours}</span>
+                    <span>{allDay ? 'Open 24 hours, 7 days' : hours}</span>
                   </li>
                   <li>
                     <span className="gi-icon">
                       <LuZap aria-hidden />
                     </span>
-                    <span>Premium LED Floodlights</span>
+                    <span>LED floodlights</span>
                   </li>
                   {v?.pitches.map((p) => (
                     <li key={p.id}>
@@ -216,7 +191,7 @@ export const Home = () => {
                 </ul>
               </div>
               <Link to="/arena" className="h-btn dark">
-                View Full Arena <LuArrowRight aria-hidden />
+                View full arena <LuArrowRight aria-hidden />
               </Link>
             </aside>
           </div>
@@ -225,7 +200,7 @@ export const Home = () => {
 
       <section className="h-band">
         <div className="container">
-          <SectionTitle title="Everything for Game Night" sub="Facilities included in every booking" />
+          <SectionTitle title="Everything for game night" sub="Facilities included in every booking" />
           <div className="h-facilities">
             {facilities.map(({ name, icon: Icon }) => (
               <div key={name} className="h-facility">
@@ -241,7 +216,7 @@ export const Home = () => {
 
       <section className="h-band cream">
         <div className="container">
-          <SectionTitle title="Simple, Upfront Pricing" sub={`Book ${v?.minHours ?? 1} to ${v?.maxHours ?? 24} hours. Fees are shown before you pay`} />
+          <SectionTitle title="Simple, upfront pricing" sub={`Book ${v?.minHours ?? 1} to ${v?.maxHours ?? 24} hours. Fees are shown before you pay`} />
           <div className="h-price">
             <div className="h-price-top">
               <div>
@@ -253,7 +228,7 @@ export const Home = () => {
               </div>
               <span className="h-price-badge">
                 <small>All hours</small>
-                Same Price
+                Same price
               </span>
             </div>
             <div className="h-price-feats">
@@ -262,7 +237,7 @@ export const Home = () => {
                   <LuClock aria-hidden />
                 </span>
                 <p>
-                  <strong>Flexible Duration</strong>
+                  <strong>Flexible duration</strong>
                   <small>
                     Book {v?.minHours ?? 1}–{v?.maxHours ?? 24} hours in one slot
                   </small>
@@ -273,7 +248,7 @@ export const Home = () => {
                   <LuShieldCheck aria-hidden />
                 </span>
                 <p>
-                  <strong>No Hidden Charges</strong>
+                  <strong>No hidden charges</strong>
                   <small>What you see is what you pay</small>
                 </p>
               </div>
@@ -282,7 +257,7 @@ export const Home = () => {
                   <LuRefreshCw aria-hidden />
                 </span>
                 <p>
-                  <strong>Easy Cancellation</strong>
+                  <strong>Easy cancellation</strong>
                   <small>Cancel or reschedule from My Bookings</small>
                 </p>
               </div>
@@ -293,7 +268,7 @@ export const Home = () => {
 
       <section className="h-band">
         <div className="container">
-          <SectionTitle title="Booked in Four Taps" sub="No calls, no waiting for confirmation" />
+          <SectionTitle title="Booked in four taps" sub="No calls, no waiting for confirmation" />
           <ol className="h-steps">
             {steps.map(([Icon, title, text], i) => (
               <li key={title}>
@@ -301,7 +276,7 @@ export const Home = () => {
                   <Icon aria-hidden />
                 </span>
                 <div>
-                  <small>Step 0{i + 1}</small>
+                  <small>Step {i + 1}</small>
                   <strong>{title}</strong>
                   <p>{text}</p>
                 </div>
@@ -314,7 +289,7 @@ export const Home = () => {
       {offers.data && offers.data.length > 0 && (
         <section className="h-band" id="offers">
           <div className="container">
-            <SectionTitle title="Offers for You" sub="Tap a code to copy it" />
+            <SectionTitle title="Offers for you" sub="Tap a code to copy it" />
             <OfferCards offers={offers.data} />
           </div>
         </section>
@@ -322,7 +297,7 @@ export const Home = () => {
 
       <section className="h-band cream">
         <div className="container">
-          <SectionTitle title="Players Love It" sub="From teams who play here every week" />
+          <SectionTitle title="Players love it" sub="From teams who play here every week" />
           <div className="h-reviews">
             {homeReviews.map((r) => (
               <figure key={r.name} className="h-review">
@@ -334,9 +309,6 @@ export const Home = () => {
                     <strong>{r.name}</strong>
                     <small>{r.team}</small>
                   </span>
-                  <span className="verified">
-                    <LuShieldCheck aria-hidden /> Verified
-                  </span>
                 </figcaption>
               </figure>
             ))}
@@ -346,14 +318,14 @@ export const Home = () => {
 
       <section className="h-band">
         <div className="container">
-          <SectionTitle title="Find Us" sub="Free parking on site" />
+          <SectionTitle title="Find us" sub="Free parking on site" />
           <MapCard address={address} phone={v?.phone ?? '+91 75071 97507'} />
         </div>
       </section>
 
       <section className="h-band cream" id="faq">
         <div className="container">
-          <SectionTitle title="Good to Know" />
+          <SectionTitle title="Good to know" />
           <div className="h-faq">
             {faqs.map(([q, a], i) => (
               <details key={q} open={i === 0}>
@@ -368,11 +340,11 @@ export const Home = () => {
           <div className="h-cta">
             <div className="h-cta-copy">
               <h2>
-                Your next match is <span>one tap away.</span>
+                Your next match is one tap away
               </h2>
               <p>Check live slots at {v?.name ?? 'The Riverside Cricket Box'} and lock in your game.</p>
               <Link to="/book" className="h-btn lime">
-                Book a Slot <LuArrowRight aria-hidden />
+                Book a slot <LuArrowRight aria-hidden />
               </Link>
             </div>
             <div className="h-cta-ball" aria-hidden>
