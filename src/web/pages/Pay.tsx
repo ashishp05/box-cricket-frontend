@@ -33,6 +33,8 @@ const PayInner = ({ id }: { id: string }) => {
   const [method, setMethod] = useState<OnlinePaymentKind>('upi_qr');
   const [order, setOrder] = useState<PaymentOrder | null>(null);
   const [failure, setFailure] = useState<string>();
+  // The payment could not even start (e.g. the server has no Razorpay keys): no money moved.
+  const [orderFailed, setOrderFailed] = useState(false);
   const [processing, setProcessing] = useState(false);
   const orderFor = useRef<string | null>(null);
 
@@ -50,7 +52,10 @@ const PayInner = ({ id }: { id: string }) => {
       setOrder(created);
       void booking.refetch();
     },
-    onError: (error) => setFailure(errorMessage(error)),
+    onError: (error) => {
+      setOrderFailed(true);
+      setFailure(errorMessage(error));
+    },
   });
 
   // One order per chosen method, so the UPI QR can be shown straight away.
@@ -121,6 +126,7 @@ const PayInner = ({ id }: { id: string }) => {
 
   const retry = (m?: OnlinePaymentKind) => {
     setFailure(undefined);
+    setOrderFailed(false);
     if (m && m !== method) {
       setMethod(m);
       return;
@@ -194,9 +200,13 @@ const PayInner = ({ id }: { id: string }) => {
                 <LuCircleX aria-hidden />
               </span>
               <div className="grow">
-                <h2>Payment failed</h2>
+                <h2>{orderFailed ? 'Online payment is unavailable' : 'Payment failed'}</h2>
                 <p>{failure}</p>
-                <p className="bk-fine">If money was debited, it is refunded to your account automatically within 5–7 working days.</p>
+                <p className="bk-fine">
+                  {orderFailed
+                    ? 'No money has been taken. Try again in a moment, or call the arena to pay at the counter.'
+                    : 'If money was debited, it is refunded to your account automatically within 5–7 working days.'}
+                </p>
                 <div className="bk-state-actions">
                   <Button variant="primary" onClick={() => retry()}>
                     <LuRefreshCw aria-hidden /> Try again
@@ -229,7 +239,9 @@ const PayInner = ({ id }: { id: string }) => {
             </div>
 
             <div className="bk-paypanel">
-              {!order ? (
+              {!order && orderFailed ? (
+                <p className="bk-paynote">Payment could not be started. Use Try again above.</p>
+              ) : !order ? (
                 <div className="bk-preparing">
                   <span className="spinner" aria-hidden /> Preparing secure payment…
                 </div>

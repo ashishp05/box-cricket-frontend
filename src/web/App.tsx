@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
 import { WelcomeGate } from './components/Welcome';
@@ -11,10 +11,10 @@ import { Details } from './pages/Details';
 import { Home } from './pages/Home';
 import { MyBookings } from './pages/MyBookings';
 import { Pay } from './pages/Pay';
+import { PayRoute } from './pages/PayLink';
 import { Profile } from './pages/Profile';
 import { NotFound, Privacy, Terms } from './pages/Static';
 
-const LegacyPay = () => <Navigate to={`/checkout/payment/${useParams().id}`} replace />;
 
 export const App = () => (
   <WelcomeGate>
@@ -36,7 +36,7 @@ export const App = () => (
         <Route path="privacy" element={<Privacy />} />
         {/* Old paths */}
         <Route path="checkout" element={<Navigate to="/checkout/summary" replace />} />
-        <Route path="pay/:id" element={<LegacyPay />} />
+        <Route path="pay/:id" element={<PayRoute />} />
         <Route path="account" element={<Navigate to="/profile" replace />} />
         <Route path="offers" element={<Navigate to="/#offers" replace />} />
         <Route path="*" element={<NotFound />} />

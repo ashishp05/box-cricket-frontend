@@ -100,3 +100,48 @@ export const openCheckout = async (
     checkout.open();
   });
 };
+
+// Payment links: Checkout with every method the account supports (UPI, cards, netbanking,
+// wallets). Same result shape as openCheckout.
+export const openStandardCheckout = async (options: {
+  keyId: string;
+  amount: number;
+  currency: string;
+  razorpayOrderId: string;
+  name: string;
+  description: string;
+  prefill: { name: string; contact: string; email: string | null };
+}): Promise<{ result: CheckoutResult | null; error?: string }> => {
+  await loadCheckout();
+  const Razorpay = window.Razorpay;
+  if (!Razorpay) throw new Error('Razorpay is not available right now.');
+
+  return new Promise((resolve) => {
+    let lastError: string | undefined;
+    const checkout = new Razorpay({
+      key: options.keyId,
+      amount: options.amount,
+      currency: options.currency,
+      order_id: options.razorpayOrderId,
+      name: options.name,
+      description: options.description,
+      prefill: { name: options.prefill.name, contact: `+91${options.prefill.contact}`, email: options.prefill.email ?? undefined },
+      readonly: { contact: true },
+      theme: { color: '#062019' },
+      retry: { enabled: true },
+      handler: (response: CheckoutSuccess) =>
+        resolve({
+          result: {
+            razorpayOrderId: response.razorpay_order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+          },
+        }),
+      modal: { ondismiss: () => resolve({ result: null, error: lastError }), confirm_close: true },
+    });
+    checkout.on('payment.failed', (response) => {
+      lastError = response.error?.description ?? 'Payment failed. No money has been deducted.';
+    });
+    checkout.open();
+  });
+};

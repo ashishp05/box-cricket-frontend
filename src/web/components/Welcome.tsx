@@ -1,4 +1,5 @@
 import { type FormEvent, type ReactNode, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { nameError, phoneError, sanitizeName, sanitizePhone } from '@shared/lib/validation';
 
@@ -10,13 +11,15 @@ import { Logo } from './art';
 // with OTP login the details only pre-fill login and checkout.
 export const WelcomeGate = ({ children }: { children: ReactNode }) => {
   const customer = useCustomer();
+  // Payment links open straight to the pay page.
+  const onPayLink = /^\/pay\/od/i.test(useLocation().pathname);
   const [guest, setGuest] = useState(loadGuest);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [busy, setBusy] = useState(false);
 
-  if (guest || customer) return <>{children}</>;
+  if (guest || customer || onPayLink) return <>{children}</>;
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();

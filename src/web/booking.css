@@ -2455,3 +2455,184 @@
     transform: translateY(105vh) rotate(540deg);
   }
 }
+
+/* ---------- Payment link pay page ---------- */
+.pl-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 40px 0 64px;
+}
+.pl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(6 32 25 / 0.06);
+}
+.pl-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.pl-head img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.pl-head strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+}
+.pl-head span {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pl-for {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pl-body h1 {
+  margin-top: 4px;
+  font-size: 24px;
+  font-weight: 600;
+}
+.pl-desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.pl-amount {
+  margin-top: 16px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pl-note,
+.pl-expiry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: -8px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+.pl-note svg {
+  width: 14px;
+  height: 14px;
+  color: var(--success);
+}
+.pl-expiry svg {
+  width: 13px;
+  height: 13px;
+}
+.pl-fail {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #f3c4be;
+  background: #fffafa;
+  color: var(--ink);
+  font-size: 13px;
+}
+.pl-fail > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--danger);
+  flex: none;
+}
+.pl-fail strong {
+  color: var(--danger);
+  font-size: 14px;
+}
+.pl-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0 4px;
+  text-align: center;
+}
+.pl-done h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.pl-done p {
+  max-width: 340px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.pl-done .btn {
+  margin-top: 8px;
+}
+.pl-tick {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--success-soft);
+  color: var(--success);
+}
+.pl-tick.grey {
+  background: #eeece4;
+  color: var(--muted);
+}
+.pl-tick svg {
+  width: 28px;
+  height: 28px;
+}
+.pl-ref {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.pl-state {
+  align-items: center;
+  text-align: center;
+}
+.pl-state h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+.pl-state p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.pl-foot {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+.pl-foot a {
+  color: var(--primary);
+  font-weight: 500;
+}
+@media (max-width: 560px) {
+  .pl-page {
+    padding: 16px 0 calc(100px + env(safe-area-inset-bottom));
+  }
+  .pl-card {
+    padding: 20px;
+  }
+  .pl-amount {
+    font-size: 38px;
+  }
+}

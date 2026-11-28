@@ -22,6 +22,32 @@ const client = createApiClient({
 });
 const { request } = client;
 
+// Payment link (Order management) as the pay page sees it. Money in rupees.
+export interface PayLink {
+  id: string;
+  title: string;
+  description: string | null;
+  customerName: string;
+  amount: number;
+  status: 'pending' | 'paid' | 'cancelled' | 'expired' | 'refunded';
+  expiresAt: string;
+  paidAt: string | null;
+  paymentMethod: string | null;
+}
+
+// Razorpay Checkout options for a payment link. amount is in paise.
+export interface PayLinkCheckout {
+  orderId: string;
+  razorpayOrderId: string;
+  amount: number;
+  currency: string;
+  keyId: string;
+  mock: boolean;
+  name: string;
+  description: string;
+  prefill: { name: string; contact: string; email: string | null };
+}
+
 export const api = {
   // Login (OTP)
   // Name + mobile login without an SMS code (server CUSTOMER_LOGIN_MODE=simple).
@@ -54,6 +80,12 @@ export const api = {
   cancel: (id: string, reason?: string) => request<Booking>(`/bookings/${id}/cancel`, { method: 'POST', body: { reason } }),
   reschedule: (id: string, date: string, startHour: number) =>
     request<Booking>(`/bookings/${id}/reschedule`, { method: 'POST', body: { date, startHour } }),
+
+  // Payment links (no login: the long random id is the key)
+  payLink: (id: string) => request<PayLink>(`/orders/${id}`, { token: null }),
+  payLinkCheckout: (id: string) => request<PayLinkCheckout>(`/orders/${id}/checkout`, { method: 'POST', token: null }),
+  payLinkVerify: (id: string, body: { razorpayOrderId: string; razorpayPaymentId: string; razorpaySignature: string }) =>
+    request<PayLink>(`/orders/${id}/verify`, { method: 'POST', body, token: null }),
 
   // Payments
   createOrder: (bookingId: string, method: OnlinePaymentKind) =>
